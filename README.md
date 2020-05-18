@@ -2,9 +2,10 @@
 
 **To Do**
 1. Most of these methods focus on point data - are there methods that work for lines and polygons or is that not a thing yet?
-2. Workshop data - Maybe the SF street tree dataset?
-3. Workshop storyline - what will we be doing?  Is there a plausible use-case?
-4. Is this really 2 or 3 workshops? Geostats can easily be it's own.
+1. Workshop data - Maybe the SF street tree dataset?
+1. Workshop storyline - what will we be doing?  Is there a plausible use-case?
+1. What packages should we use?
+1. Is this really 2 or 3 workshops? Geostats can easily be it's own.
 
 
 
