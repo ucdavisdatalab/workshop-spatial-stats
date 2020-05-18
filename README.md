@@ -1,5 +1,11 @@
 **This workshop is under development.**  Please contact Michele Tobias at mmtobias@ucdavis.edu with questions.
 
+**To Do**
+1. Most of these methods focus on point data - are there methods that work for lines and polygons or is that not a thing yet?
+2. Workshop data - Maybe the SF street tree dataset?
+3. Workshop storyline - what will we be doing?  Is there a plausible use-case?
+4. Is this really 2 or 3 workshops? Geostats can easily be it's own.
+
 
 
 # Introduction
@@ -13,6 +19,9 @@ By the end of this workshop, participants should understand
 1. How to use R to implement these concepts
 
 # Set Up
+For this workshop, you will need:
+1. Install R and RStudio
+1. Download the workshop data
 
 # Outline
 
