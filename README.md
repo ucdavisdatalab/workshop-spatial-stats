@@ -50,3 +50,7 @@ Predicting values using nearby data
 1. Variograms
 1. Model parameters
 1. Interpolation methods - example: inverse distance weighted, kriging, etc.
+
+# Resources
+
+* Sören Wilke's [A practical guide to geospatial interpolation with R](https://swilke-geoscience.net/post/spatial_interpolation/)
