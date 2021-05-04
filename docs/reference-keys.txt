@@ -1,0 +1,15 @@
+spatial-data
+random-fields
+geostatistics
+example-rongelap-radiation
+kriging
+example-meuse-river-zinc-pollution
+kriging-the-meuse-data
+areal-data
+example-north-carolina-sids
+neighbor-weighting
+morans-i
+point-processes
+import-and-plot-valley-oak-locations
+poisson-point-process
+ripleys-k

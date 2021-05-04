@@ -1,0 +1,66 @@
+# Point processes
+
+```{r point-pattern-packages, message=FALSE, results='hide'}
+library( "spatstat" )
+library( "sf" )
+library( "tigris" )
+library( "dplyr" )
+library( "readr" )
+library( "ggplot2" )
+```
+
+## Import and plot valley oak locations
+To introduce point patterns, I will use data from iNaturalist on the locations of valley oaks in Sacramento County. First, we will import the data and the Sac county shapefile.
+
+```{r import-oaks, message=FALSE, results='hide'}
+oak = read_csv( "data/oak.csv" )
+
+# convert oak to an sf object
+oak = st_as_sf( oak, coords = c("longitude", "latitude" ), crs = "epsg:4326" )
+
+# project oaks to California Albers
+oak = st_transform( oak, crs = "epsg:6414" )
+```
+
+Now, let's plot the points.
+
+```{r plot-oaks, message=FALSE, results='hide'}
+# load sac county shape
+cty = counties()
+saccty = filter( cty, NAME == "Sacramento" )
+saccty = st_transform( saccty, crs = "epsg:6414" )
+
+# plot the oak locations in Sac county
+ggplot(saccty) + geom_sf() + geom_sf(data=oak) + theme_bw()
+```
+
+## Poisson point process
+The Poisson point process is a very simple point process that assumes that if you draw any square on the region, then the number of points inside the square should follow a Poisson distribution, with the expected number of points only depending on the area of the square. 
+
+Based on the clustering of valley oaks (mostly around the American River), it looks like the number of trees would depend on the location of the square, not just its size. That would imply that this is not a simple Poisson point process. Let's back up that eye test by looking at Ripley's K function - a measure of how clustered or dispersed the points are. Either clustering or disepersion would be a violation of the Poisson assumptions. Begin by converting the point locations into a `ppp` object (`spatstat` package).
+
+
+```{r make-ppp}
+# get the locations of the oaks and the bounds of the county
+oak_locs = st_coordinates( oak )
+
+# turn the oak locations into a Poisson point pattern:
+oak_pts = ppp( oak_locs[, 1], oak_locs[, 2], window = as.owin( saccty ) )
+```
+
+## Ripley's K
+Now calculate the Ripley's K function, and just for fun I'll include an estimated density showing hotspots (this density estimate is over-simple but still suggestive.)
+
+```{r plot-ppp, cache=TRUE}
+# plot the point pattern:
+plot( oak_pts )
+
+# check whether the points follow a Poisson distribution (no)
+plot( Kest( oak_pts ) )
+plot( envelope( oak_pts, Kest))
+
+# plot the estimated isotropic density:
+plot( density( oak_pts ) )
+```
+
+The observed K-function lies entirely above the plausible envelope that would imply a simple Poisson point process. Above the theoretical K means the points are clustered (below would mean dispersed).

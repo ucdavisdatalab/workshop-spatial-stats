@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Areal data | Introduction to spatial statistics in R</title>
+  <meta name="description" content="4 Areal data | Introduction to spatial statistics in R" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Areal data | Introduction to spatial statistics in R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://ucdavisdatalab.github.io/workshop-spatial-stats/" />
+  
+  
+  <meta name="github-repo" content="ucdavisdatalab/YOUR_REPO" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Areal data | Introduction to spatial statistics in R" />
+  
+  
+  
+
+<meta name="author" content="Wesley Brooks" />
+
+
+<meta name="date" content="2021-05-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="geostatistics.html"/>
+<link rel="next" href="point-processes.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://datalab.ucdavis.edu/">
+  <img src="https://datalab.ucdavis.edu/wp-content/uploads/2019/07/datalab-logo-full-color-rgb-1.png" style="height: 100%; width: 100%; object-fit: contain" />
+</a></li>
+<li><a href="./" style="font-size: 18px">Introduction to spatial statistics in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a></li>
+<li class="chapter" data-level="1" data-path="spatial-data.html"><a href="spatial-data.html"><i class="fa fa-check"></i><b>1</b> Spatial data</a></li>
+<li class="chapter" data-level="2" data-path="random-fields.html"><a href="random-fields.html"><i class="fa fa-check"></i><b>2</b> Random fields</a></li>
+<li class="chapter" data-level="3" data-path="geostatistics.html"><a href="geostatistics.html"><i class="fa fa-check"></i><b>3</b> Geostatistics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="geostatistics.html"><a href="geostatistics.html#example-rongelap-radiation"><i class="fa fa-check"></i><b>3.1</b> Example: Rongelap radiation</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="geostatistics.html"><a href="geostatistics.html#kriging"><i class="fa fa-check"></i><b>3.1.1</b> Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="geostatistics.html"><a href="geostatistics.html#example-meuse-river-zinc-pollution"><i class="fa fa-check"></i><b>3.2</b> Example: Meuse River zinc pollution</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="geostatistics.html"><a href="geostatistics.html#kriging-the-meuse-data"><i class="fa fa-check"></i><b>3.2.1</b> Kriging the Meuse data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="areal-data.html"><a href="areal-data.html"><i class="fa fa-check"></i><b>4</b> Areal data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="areal-data.html"><a href="areal-data.html#example-north-carolina-sids"><i class="fa fa-check"></i><b>4.1</b> Example: North Carolina SIDS</a></li>
+<li class="chapter" data-level="4.2" data-path="areal-data.html"><a href="areal-data.html#neighbor-weighting"><i class="fa fa-check"></i><b>4.2</b> Neighbor weighting</a></li>
+<li class="chapter" data-level="4.3" data-path="areal-data.html"><a href="areal-data.html#morans-i"><i class="fa fa-check"></i><b>4.3</b> Moran’s I</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="point-processes.html"><a href="point-processes.html"><i class="fa fa-check"></i><b>5</b> Point processes</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="point-processes.html"><a href="point-processes.html#import-and-plot-valley-oak-locations"><i class="fa fa-check"></i><b>5.1</b> Import and plot valley oak locations</a></li>
+<li class="chapter" data-level="5.2" data-path="point-processes.html"><a href="point-processes.html#poisson-point-process"><i class="fa fa-check"></i><b>5.2</b> Poisson point process</a></li>
+<li class="chapter" data-level="5.3" data-path="point-processes.html"><a href="point-processes.html#ripleys-k"><i class="fa fa-check"></i><b>5.3</b> Ripley’s K</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to spatial statistics in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="areal-data" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Areal data</h1>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="areal-data.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;spdep&quot;</span> )</span>
+<span id="cb34-2"><a href="areal-data.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;tigris&quot;</span> )</span>
+<span id="cb34-3"><a href="areal-data.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;sf&quot;</span> )</span>
+<span id="cb34-4"><a href="areal-data.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;ggplot2&quot;</span> )</span>
+<span id="cb34-5"><a href="areal-data.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;readr&quot;</span> )</span></code></pre></div>
+<div id="example-north-carolina-sids" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Example: North Carolina SIDS</h2>
+<p>To illustrate some basics of areal data, we’ll use data on the rate of sudden infant death in 1979 North Carolina. Here we import the data and the shapes of the counties.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="areal-data.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import the north carolina county shapefiles</span></span>
+<span id="cb35-2"><a href="areal-data.html#cb35-2" aria-hidden="true" tabindex="-1"></a>cty <span class="ot">=</span> <span class="fu">counties</span>()</span>
+<span id="cb35-3"><a href="areal-data.html#cb35-3" aria-hidden="true" tabindex="-1"></a>nc_cty <span class="ot">=</span> cty[ cty<span class="sc">$</span>STATEFP <span class="sc">==</span> <span class="st">&quot;37&quot;</span>, ]</span>
+<span id="cb35-4"><a href="areal-data.html#cb35-4" aria-hidden="true" tabindex="-1"></a>nc_cty <span class="ot">=</span> <span class="fu">st_simplify</span>( nc_cty, <span class="at">dTolerance=</span><span class="fl">0.01</span> )</span>
+<span id="cb35-5"><a href="areal-data.html#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="areal-data.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># import the north carolina SIDS data</span></span>
+<span id="cb35-7"><a href="areal-data.html#cb35-7" aria-hidden="true" tabindex="-1"></a>nc_sids <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="st">&quot;data/nc_sids.csv&quot;</span> )</span>
+<span id="cb35-8"><a href="areal-data.html#cb35-8" aria-hidden="true" tabindex="-1"></a>nc_sids <span class="ot">=</span> <span class="fu">st_as_sf</span>( nc_sids, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>), <span class="at">crs =</span> <span class="st">&quot;epsg:4269&quot;</span> )</span></code></pre></div>
+<p>Match the data to the shapes and plot the rate of SIDS:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="areal-data.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join the shapes and data</span></span>
+<span id="cb36-2"><a href="areal-data.html#cb36-2" aria-hidden="true" tabindex="-1"></a>indx <span class="ot">=</span> <span class="fu">match</span>( nc_cty<span class="sc">$</span>NAME, nc_sids<span class="sc">$</span>name )</span>
+<span id="cb36-3"><a href="areal-data.html#cb36-3" aria-hidden="true" tabindex="-1"></a>nc_cty <span class="ot">=</span> <span class="fu">cbind</span>( nc_cty, nc_sids[indx, ] )</span>
+<span id="cb36-4"><a href="areal-data.html#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="areal-data.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate rate of SIDS in 1979</span></span>
+<span id="cb36-6"><a href="areal-data.html#cb36-6" aria-hidden="true" tabindex="-1"></a>nc_cty <span class="ot">=</span> <span class="fu">within</span>(nc_cty, sids_rate <span class="ot">&lt;-</span> SID79 <span class="sc">/</span> BIR79)</span>
+<span id="cb36-7"><a href="areal-data.html#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="areal-data.html#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the data</span></span>
+<span id="cb36-9"><a href="areal-data.html#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nc_cty) <span class="sc">+</span></span>
+<span id="cb36-10"><a href="areal-data.html#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">fill=</span>sids_rate)) <span class="sc">+</span></span>
+<span id="cb36-11"><a href="areal-data.html#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>( <span class="at">low=</span><span class="fu">grey</span>(<span class="fl">0.5</span>), <span class="at">high=</span><span class="st">&#39;red&#39;</span> ) <span class="sc">+</span></span>
+<span id="cb36-12"><a href="areal-data.html#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="04_areal-data_files/figure-html/plot-nc-sids-1.png" width="672" /></p>
+</div>
+<div id="neighbor-weighting" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Neighbor weighting</h2>
+<p>While geostatistical covariance is based on the distance from points, we can’t calcuate those distances for areal data because there is no unique distance between areas. For example, how far you are from Sacramento county depends on where in Yolo county you stand. So for areal data, the covariance is based on whether areas share a border. This has the added benefit of making for much faster calculations (because most areas do not touch each other). Here we’ll create a neighborhood for the North Carolina counties:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="areal-data.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make the neighborhood</span></span>
+<span id="cb37-2"><a href="areal-data.html#cb37-2" aria-hidden="true" tabindex="-1"></a>nc_nb <span class="ot">=</span> <span class="fu">poly2nb</span>( nc_cty, <span class="at">queen=</span><span class="cn">TRUE</span>, <span class="at">row.names=</span>nc_cty<span class="sc">$</span>NAME )</span>
+<span id="cb37-3"><a href="areal-data.html#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="areal-data.html#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the neighborhod</span></span>
+<span id="cb37-5"><a href="areal-data.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">st_geometry</span>(nc_cty) )</span>
+<span id="cb37-6"><a href="areal-data.html#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( nc_nb, <span class="at">coords =</span> <span class="fu">st_centroid</span>( <span class="fu">st_geometry</span>(nc_cty), of_largest_polygon ),</span>
+<span id="cb37-7"><a href="areal-data.html#cb37-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in st_centroid.sfc(st_geometry(nc_cty), of_largest_polygon): st_centroid
+## does not give correct centroids for longitude/latitude data</code></pre>
+<p><img src="04_areal-data_files/figure-html/nc-neighborhood-1.png" width="672" /></p>
+</div>
+<div id="morans-i" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Moran’s I</h2>
+<p>The basic test for the presence of autocorrelation between neighbors is called Moran’s I and it is in the <code>spdep</code> package.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="areal-data.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate neighbor weights (type W)</span></span>
+<span id="cb39-2"><a href="areal-data.html#cb39-2" aria-hidden="true" tabindex="-1"></a>W <span class="ot">=</span> <span class="fu">nb2listw</span>(nc_nb)</span>
+<span id="cb39-3"><a href="areal-data.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>( nc_cty<span class="sc">$</span>sids_rate, W )</span></code></pre></div>
+<pre><code>## 
+##  Moran I test under randomisation
+## 
+## data:  nc_cty$sids_rate  
+## weights: W    
+## 
+## Moran I statistic standard deviate = 1.5529, p-value = 0.06022
+## alternative hypothesis: greater
+## sample estimates:
+## Moran I statistic       Expectation          Variance 
+##       0.098926833      -0.010101010       0.004929027</code></pre>
+<p>Here, the result of <code>moran.test</code> is a p-value of 0.06, so the SIDS data are consistent with the absence of a spatial trend. When Moran’s I is positive the data appear clustered, and when I is negative, the data appear dispersed.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="geostatistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="point-processes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ucdavisdatalab/workshop-spatial-stats/edit/master/04_areal-data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/ucdavisdatalab/workshop-spatial-stats/blob/master/04_areal-data.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
