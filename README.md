@@ -7,7 +7,7 @@ _Instructor: Wesley Brooks <wbrooks@ucdavis.edu>_
 * [Reader](https://ucdavisdatalab.github.io/workshop-spatial-stats/)
 * [Event Page](https://datalab.ucdavis.edu/eventscalendar/maptimedavis-introduction-to-spatial-statistics-in-r/)
 
-#Overview
+# Overview
 
 The key insight  about spatial statistics is that measurements from nearby locations are more alike than measurements from distant locations.
 
