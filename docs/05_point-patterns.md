@@ -15,7 +15,7 @@ To introduce point patterns, I will use data from iNaturalist on the locations o
 
 
 ```r
-oak = read_csv( "data/oak.csv" )
+oak = read_csv( url("https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/oak.csv") )
 
 # convert oak to an sf object
 oak = st_as_sf( oak, coords = c("longitude", "latitude" ), crs = "epsg:4326" )

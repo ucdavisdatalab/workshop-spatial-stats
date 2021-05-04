@@ -15,11 +15,11 @@ To illustrate basic concepts of geostatistics, I will use measurements of gamma 
 
 ```r
 # load the point data
-rongelap = read_csv( "data/rongelap.csv" )
+rongelap = read_csv( url("https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/rongelap.csv") )
 rongelap = st_as_sf( rongelap, coords = c('x', 'y') )
 
 # load the outline of the island
-load( "data/rongelap-outline.rdata" )
+load( url("https://github.com/ucdavisdatalab/workshop-spatial-stats/blob/master/data/rongelap-outline.rdata?raw=true") )
 ```
 
 Let's check the histogram, which suggests that a log transformation will help stabilize the variance. Then plot the data over the shape of Rongelap (you've seen this already).
@@ -92,7 +92,7 @@ OK, now another geostatistical data set. This time, the data are measurements of
 
 ```r
 # load the meuse data
-meuse = read_csv( "data/meuse.csv" )
+meuse = read_csv( url("https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.csv") )
 ```
 
 ```
@@ -174,7 +174,7 @@ That's our estimated covariance function. Now let's make predictions at the loca
 
 ```r
 # load the prediction locations
-meuse.grid = read_csv( "data/meuse.grid.csv" )
+meuse.grid = read_csv( url("https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.grid.csv") )
 ```
 
 ```

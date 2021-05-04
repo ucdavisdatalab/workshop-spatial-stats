@@ -20,7 +20,7 @@ nc_cty = cty[ cty$STATEFP == "37", ]
 nc_cty = st_simplify( nc_cty, dTolerance=0.01 )
 
 # import the north carolina SIDS data
-nc_sids = read_csv( "data/nc_sids.csv" )
+nc_sids = read_csv( url("https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/nc_sids.csv") )
 nc_sids = st_as_sf( nc_sids, coords = c("lon", "lat"), crs = "epsg:4269" )
 ```
 

@@ -192,11 +192,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.1</span> Example: Rongelap radiation</h2>
 <p>To illustrate basic concepts of geostatistics, I will use measurements of gamma rays on Rongelap atoll, which was irradiated by fallout in 1954 due to the Castle Bravo nuclear test at Bikini atoll, which was three times as powerful as planned. Let’s load the data.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="geostatistics.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the point data</span></span>
-<span id="cb12-2"><a href="geostatistics.html#cb12-2" aria-hidden="true" tabindex="-1"></a>rongelap <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="st">&quot;data/rongelap.csv&quot;</span> )</span>
+<span id="cb12-2"><a href="geostatistics.html#cb12-2" aria-hidden="true" tabindex="-1"></a>rongelap <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/rongelap.csv&quot;</span>) )</span>
 <span id="cb12-3"><a href="geostatistics.html#cb12-3" aria-hidden="true" tabindex="-1"></a>rongelap <span class="ot">=</span> <span class="fu">st_as_sf</span>( rongelap, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&#39;x&#39;</span>, <span class="st">&#39;y&#39;</span>) )</span>
 <span id="cb12-4"><a href="geostatistics.html#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-5"><a href="geostatistics.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># load the outline of the island</span></span>
-<span id="cb12-6"><a href="geostatistics.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>( <span class="st">&quot;data/rongelap-outline.rdata&quot;</span> )</span></code></pre></div>
+<span id="cb12-6"><a href="geostatistics.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>( <span class="fu">url</span>(<span class="st">&quot;https://github.com/ucdavisdatalab/workshop-spatial-stats/blob/master/data/rongelap-outline.rdata?raw=true&quot;</span>) )</span></code></pre></div>
 <p>Let’s check the histogram, which suggests that a log transformation will help stabilize the variance. Then plot the data over the shape of Rongelap (you’ve seen this already).</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="geostatistics.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check the histogram to see about a log transform</span></span>
 <span id="cb13-2"><a href="geostatistics.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>( rongelap, <span class="fu">hist</span>(val) )</span></code></pre></div>
@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.2</span> Example: Meuse River zinc pollution</h2>
 <p>OK, now another geostatistical data set. This time, the data are measurements of pollution in digs within a bend of the Meuse River in northern France. We will focus on zinc pollution. First thing is to load and transform the data:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="geostatistics.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the meuse data</span></span>
-<span id="cb20-2"><a href="geostatistics.html#cb20-2" aria-hidden="true" tabindex="-1"></a>meuse <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="st">&quot;data/meuse.csv&quot;</span> )</span></code></pre></div>
+<span id="cb20-2"><a href="geostatistics.html#cb20-2" aria-hidden="true" tabindex="-1"></a>meuse <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.csv&quot;</span>) )</span></code></pre></div>
 <pre><code>## 
 ## ── Column specification ────────────────────────────────────────────────────────
 ## cols(
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="03_geostatistics_files/figure-html/meuse-variogram-1.png" width="672" /></p>
 <p>That’s our estimated covariance function. Now let’s make predictions at the locations specified in <code>meuse.grid</code> and plot them.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="geostatistics.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the prediction locations</span></span>
-<span id="cb28-2"><a href="geostatistics.html#cb28-2" aria-hidden="true" tabindex="-1"></a>meuse.grid <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="st">&quot;data/meuse.grid.csv&quot;</span> )</span></code></pre></div>
+<span id="cb28-2"><a href="geostatistics.html#cb28-2" aria-hidden="true" tabindex="-1"></a>meuse.grid <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.grid.csv&quot;</span>) )</span></code></pre></div>
 <pre><code>## 
 ## ── Column specification ────────────────────────────────────────────────────────
 ## cols(
