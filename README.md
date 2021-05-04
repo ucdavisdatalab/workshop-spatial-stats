@@ -2,7 +2,7 @@
 
 _[UC Davis DataLab](https://datalab.ucdavis.edu/)_  
 _Spring 2021_  
-_Instructor: YOUR NAME <<YOUR_EMAIL@ucdavis.edu>>_  
+_Instructor: Wesley Brooks <wbrooks@ucdavis.edu>_  
 
 * [Reader](https://ucdavisdatalab.github.io/workshop-spatial-stats/)
 * [Event Page](https://datalab.ucdavis.edu/eventscalendar/maptimedavis-introduction-to-spatial-statistics-in-r/)
