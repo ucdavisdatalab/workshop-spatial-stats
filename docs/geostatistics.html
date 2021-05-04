@@ -279,7 +279,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb27-2"><a href="geostatistics.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( meuse_fit ) <span class="sc">+</span></span>
 <span id="cb27-3"><a href="geostatistics.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>( <span class="at">mapping =</span> <span class="fu">aes</span>( <span class="at">color=</span>var1.var )) <span class="sc">+</span></span>
 <span id="cb27-4"><a href="geostatistics.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low=</span><span class="fu">grey</span>(<span class="fl">0.7</span>), <span class="at">high=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb27-5"><a href="geostatistics.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<span id="cb27-5"><a href="geostatistics.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>meuse) <span class="sc">+</span></span>
+<span id="cb27-6"><a href="geostatistics.html#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="03_geostatistics_files/figure-html/meuse-kriging-2.png" width="672" /></p>
 <p>Note that the estimated concentration is greatest near the river, and the uncertainty of the predictions grows as you get farther away from measured data.</p>
 

@@ -168,6 +168,7 @@ ggplot( meuse_fit ) +
 ggplot( meuse_fit ) +
   geom_sf( mapping = aes( color=var1.var )) +
   scale_color_gradient(low=grey(0.7), high="red") +
+  geom_sf(data=meuse) +
   theme_bw()
 ```
 
