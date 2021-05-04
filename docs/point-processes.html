@@ -184,53 +184,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="point-processes" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Point processes</h1>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="point-processes.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;spatstat&quot;</span> )</span>
-<span id="cb41-2"><a href="point-processes.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;sf&quot;</span> )</span>
-<span id="cb41-3"><a href="point-processes.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;tigris&quot;</span> )</span>
-<span id="cb41-4"><a href="point-processes.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;dplyr&quot;</span> )</span>
-<span id="cb41-5"><a href="point-processes.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;readr&quot;</span> )</span>
-<span id="cb41-6"><a href="point-processes.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;ggplot2&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="point-processes.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;spatstat&quot;</span> )</span>
+<span id="cb35-2"><a href="point-processes.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;sf&quot;</span> )</span>
+<span id="cb35-3"><a href="point-processes.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;tigris&quot;</span> )</span>
+<span id="cb35-4"><a href="point-processes.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;dplyr&quot;</span> )</span>
+<span id="cb35-5"><a href="point-processes.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;readr&quot;</span> )</span>
+<span id="cb35-6"><a href="point-processes.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( <span class="st">&quot;ggplot2&quot;</span> )</span></code></pre></div>
 <div id="import-and-plot-valley-oak-locations" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Import and plot valley oak locations</h2>
 <p>To introduce point patterns, I will use data from iNaturalist on the locations of valley oaks in Sacramento County. First, we will import the data and the Sac county shapefile.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="point-processes.html#cb42-1" aria-hidden="true" tabindex="-1"></a>oak <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/oak.csv&quot;</span>) )</span>
-<span id="cb42-2"><a href="point-processes.html#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="point-processes.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># convert oak to an sf object</span></span>
-<span id="cb42-4"><a href="point-processes.html#cb42-4" aria-hidden="true" tabindex="-1"></a>oak <span class="ot">=</span> <span class="fu">st_as_sf</span>( oak, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span> ), <span class="at">crs =</span> <span class="st">&quot;epsg:4326&quot;</span> )</span>
-<span id="cb42-5"><a href="point-processes.html#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-6"><a href="point-processes.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co"># project oaks to California Albers</span></span>
-<span id="cb42-7"><a href="point-processes.html#cb42-7" aria-hidden="true" tabindex="-1"></a>oak <span class="ot">=</span> <span class="fu">st_transform</span>( oak, <span class="at">crs =</span> <span class="st">&quot;epsg:6414&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="point-processes.html#cb36-1" aria-hidden="true" tabindex="-1"></a>oak <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/oak.csv&quot;</span>) )</span>
+<span id="cb36-2"><a href="point-processes.html#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="point-processes.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># convert oak to an sf object</span></span>
+<span id="cb36-4"><a href="point-processes.html#cb36-4" aria-hidden="true" tabindex="-1"></a>oak <span class="ot">=</span> <span class="fu">st_as_sf</span>( oak, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span> ), <span class="at">crs =</span> <span class="st">&quot;epsg:4326&quot;</span> )</span>
+<span id="cb36-5"><a href="point-processes.html#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="point-processes.html#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># project oaks to California Albers</span></span>
+<span id="cb36-7"><a href="point-processes.html#cb36-7" aria-hidden="true" tabindex="-1"></a>oak <span class="ot">=</span> <span class="fu">st_transform</span>( oak, <span class="at">crs =</span> <span class="st">&quot;epsg:6414&quot;</span> )</span></code></pre></div>
 <p>Now, let’s plot the points.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="point-processes.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load sac county shape</span></span>
-<span id="cb43-2"><a href="point-processes.html#cb43-2" aria-hidden="true" tabindex="-1"></a>cty <span class="ot">=</span> <span class="fu">counties</span>()</span>
-<span id="cb43-3"><a href="point-processes.html#cb43-3" aria-hidden="true" tabindex="-1"></a>saccty <span class="ot">=</span> <span class="fu">filter</span>( cty, NAME <span class="sc">==</span> <span class="st">&quot;Sacramento&quot;</span> )</span>
-<span id="cb43-4"><a href="point-processes.html#cb43-4" aria-hidden="true" tabindex="-1"></a>saccty <span class="ot">=</span> <span class="fu">st_transform</span>( saccty, <span class="at">crs =</span> <span class="st">&quot;epsg:6414&quot;</span> )</span>
-<span id="cb43-5"><a href="point-processes.html#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="point-processes.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the oak locations in Sac county</span></span>
-<span id="cb43-7"><a href="point-processes.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(saccty) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data=</span>oak) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="point-processes.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load sac county shape</span></span>
+<span id="cb37-2"><a href="point-processes.html#cb37-2" aria-hidden="true" tabindex="-1"></a>cty <span class="ot">=</span> <span class="fu">counties</span>()</span>
+<span id="cb37-3"><a href="point-processes.html#cb37-3" aria-hidden="true" tabindex="-1"></a>saccty <span class="ot">=</span> <span class="fu">filter</span>( cty, NAME <span class="sc">==</span> <span class="st">&quot;Sacramento&quot;</span> )</span>
+<span id="cb37-4"><a href="point-processes.html#cb37-4" aria-hidden="true" tabindex="-1"></a>saccty <span class="ot">=</span> <span class="fu">st_transform</span>( saccty, <span class="at">crs =</span> <span class="st">&quot;epsg:6414&quot;</span> )</span>
+<span id="cb37-5"><a href="point-processes.html#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="point-processes.html#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the oak locations in Sac county</span></span>
+<span id="cb37-7"><a href="point-processes.html#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(saccty) <span class="sc">+</span> <span class="fu">geom_sf</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data=</span>oak) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="05_point-patterns_files/figure-html/plot-oaks-1.png" width="672" /></p>
 </div>
 <div id="poisson-point-process" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Poisson point process</h2>
 <p>The Poisson point process is a very simple point process that assumes that if you draw any square on the region, then the number of points inside the square should follow a Poisson distribution, with the expected number of points only depending on the area of the square.</p>
 <p>Based on the clustering of valley oaks (mostly around the American River), it looks like the number of trees would depend on the location of the square, not just its size. That would imply that this is not a simple Poisson point process. Let’s back up that eye test by looking at Ripley’s K function - a measure of how clustered or dispersed the points are. Either clustering or disepersion would be a violation of the Poisson assumptions. Begin by converting the point locations into a <code>ppp</code> object (<code>spatstat</code> package).</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="point-processes.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the locations of the oaks and the bounds of the county</span></span>
-<span id="cb44-2"><a href="point-processes.html#cb44-2" aria-hidden="true" tabindex="-1"></a>oak_locs <span class="ot">=</span> <span class="fu">st_coordinates</span>( oak )</span>
-<span id="cb44-3"><a href="point-processes.html#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="point-processes.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># turn the oak locations into a Poisson point pattern:</span></span>
-<span id="cb44-5"><a href="point-processes.html#cb44-5" aria-hidden="true" tabindex="-1"></a>oak_pts <span class="ot">=</span> <span class="fu">ppp</span>( oak_locs[, <span class="dv">1</span>], oak_locs[, <span class="dv">2</span>], <span class="at">window =</span> <span class="fu">as.owin</span>( saccty ) )</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="point-processes.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the locations of the oaks and the bounds of the county</span></span>
+<span id="cb38-2"><a href="point-processes.html#cb38-2" aria-hidden="true" tabindex="-1"></a>oak_locs <span class="ot">=</span> <span class="fu">st_coordinates</span>( oak )</span>
+<span id="cb38-3"><a href="point-processes.html#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="point-processes.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># turn the oak locations into a Poisson point pattern:</span></span>
+<span id="cb38-5"><a href="point-processes.html#cb38-5" aria-hidden="true" tabindex="-1"></a>oak_pts <span class="ot">=</span> <span class="fu">ppp</span>( oak_locs[, <span class="dv">1</span>], oak_locs[, <span class="dv">2</span>], <span class="at">window =</span> <span class="fu">as.owin</span>( saccty ) )</span></code></pre></div>
 <pre><code>## Warning: data contain duplicated points</code></pre>
 </div>
 <div id="ripleys-k" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Ripley’s K</h2>
 <p>Now calculate the Ripley’s K function, and just for fun I’ll include an estimated density showing hotspots (this density estimate is over-simple but still suggestive.)</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="point-processes.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the point pattern:</span></span>
-<span id="cb46-2"><a href="point-processes.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( oak_pts )</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="point-processes.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the point pattern:</span></span>
+<span id="cb40-2"><a href="point-processes.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( oak_pts )</span></code></pre></div>
 <p><img src="05_point-patterns_files/figure-html/plot-ppp-1.png" width="672" /></p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="point-processes.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check whether the points follow a Poisson distribution (no)</span></span>
-<span id="cb47-2"><a href="point-processes.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">Kest</span>( oak_pts ) )</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="point-processes.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check whether the points follow a Poisson distribution (no)</span></span>
+<span id="cb41-2"><a href="point-processes.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">Kest</span>( oak_pts ) )</span></code></pre></div>
 <p><img src="05_point-patterns_files/figure-html/plot-ppp-2.png" width="672" /></p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="point-processes.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">envelope</span>( oak_pts, Kest))</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="point-processes.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">envelope</span>( oak_pts, Kest))</span></code></pre></div>
 <pre><code>## Generating 99 simulations of CSR  ...
 ## 1, 2,  [etd 7:46] 3,  [etd 6:45] 4,
 ##  [etd 6:38] 5,  [etd 6:50] 6,  [etd 6:38] 7,  [etd 6:42] 8,
@@ -260,8 +260,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Done.</code></pre>
 <p><img src="05_point-patterns_files/figure-html/plot-ppp-3.png" width="672" /></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="point-processes.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the estimated isotropic density:</span></span>
-<span id="cb50-2"><a href="point-processes.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">density</span>( oak_pts ) )</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="point-processes.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the estimated isotropic density:</span></span>
+<span id="cb44-2"><a href="point-processes.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">density</span>( oak_pts ) )</span></code></pre></div>
 <p><img src="05_point-patterns_files/figure-html/plot-ppp-4.png" width="672" /></p>
 <p>The observed K-function lies entirely above the plausible envelope that would imply a simple Poisson point process. Above the theoretical K means the points are clustered (below would mean dispersed).</p>
 

@@ -237,79 +237,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.2</span> Example: Meuse River zinc pollution</h2>
 <p>OK, now another geostatistical data set. This time, the data are measurements of pollution in digs within a bend of the Meuse River in northern France. We will focus on zinc pollution. First thing is to load and transform the data:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="geostatistics.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the meuse data</span></span>
-<span id="cb20-2"><a href="geostatistics.html#cb20-2" aria-hidden="true" tabindex="-1"></a>meuse <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.csv&quot;</span>) )</span></code></pre></div>
-<pre><code>## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   x = col_double(),
-##   y = col_double(),
-##   cadmium = col_double(),
-##   copper = col_double(),
-##   lead = col_double(),
-##   zinc = col_double(),
-##   elev = col_double(),
-##   dist = col_double(),
-##   om = col_double(),
-##   ffreq = col_double(),
-##   soil = col_double(),
-##   lime = col_double(),
-##   landuse = col_character(),
-##   dist.m = col_double()
-## )</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="geostatistics.html#cb22-1" aria-hidden="true" tabindex="-1"></a>meuse <span class="ot">=</span> <span class="fu">st_as_sf</span>( meuse, <span class="at">coords=</span><span class="fu">c</span>( <span class="st">&#39;x&#39;</span>, <span class="st">&#39;y&#39;</span>) )</span>
-<span id="cb22-2"><a href="geostatistics.html#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="geostatistics.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># look at the zinc concentration for a possible log transform</span></span>
-<span id="cb22-4"><a href="geostatistics.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>( meuse, <span class="fu">hist</span>(zinc) )</span></code></pre></div>
+<span id="cb20-2"><a href="geostatistics.html#cb20-2" aria-hidden="true" tabindex="-1"></a>meuse <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.csv&quot;</span>) )</span>
+<span id="cb20-3"><a href="geostatistics.html#cb20-3" aria-hidden="true" tabindex="-1"></a>meuse <span class="ot">=</span> <span class="fu">st_as_sf</span>( meuse, <span class="at">coords=</span><span class="fu">c</span>( <span class="st">&#39;x&#39;</span>, <span class="st">&#39;y&#39;</span>) )</span>
+<span id="cb20-4"><a href="geostatistics.html#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="geostatistics.html#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># look at the zinc concentration for a possible log transform</span></span>
+<span id="cb20-6"><a href="geostatistics.html#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>( meuse, <span class="fu">hist</span>(zinc) )</span></code></pre></div>
 <p><img src="03_geostatistics_files/figure-html/load-meuse-data-1.png" width="672" /></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="geostatistics.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>( meuse, <span class="fu">hist</span>( <span class="fu">log</span>(zinc) ))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="geostatistics.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>( meuse, <span class="fu">hist</span>( <span class="fu">log</span>(zinc) ))</span></code></pre></div>
 <p><img src="03_geostatistics_files/figure-html/load-meuse-data-2.png" width="672" /></p>
 <p>Now let’s plot the zinc concentration. It looks like the most intense pollution is along the river itself.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="geostatistics.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bubble plot of the Meuse River zinc data</span></span>
-<span id="cb24-2"><a href="geostatistics.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(meuse) <span class="sc">+</span> <span class="fu">geom_sf</span>( <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">size=</span>zinc), <span class="at">color=</span><span class="st">&quot;green&quot;</span>, <span class="at">alpha=</span><span class="fl">0.6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="geostatistics.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bubble plot of the Meuse River zinc data</span></span>
+<span id="cb22-2"><a href="geostatistics.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(meuse) <span class="sc">+</span> <span class="fu">geom_sf</span>( <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">size=</span>zinc), <span class="at">color=</span><span class="st">&quot;green&quot;</span>, <span class="at">alpha=</span><span class="fl">0.6</span>)</span></code></pre></div>
 <p><img src="03_geostatistics_files/figure-html/plot-meuse-data-1.png" width="672" /></p>
 <div id="kriging-the-meuse-data" class="section level3" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Kriging the Meuse data</h3>
 <p>Once again, we will use kriging to predict the zinc pollution in locations where no soil samples were taken. Recall that kriging estimates the random field via the mean and covariance functions. This time, rather than providing a pre-specified covariance function, I am going to estimate it. And I will estimate the mean as not constant, but as a function of distance from the river.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="geostatistics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a variogram of the meuse data</span></span>
-<span id="cb25-2"><a href="geostatistics.html#cb25-2" aria-hidden="true" tabindex="-1"></a>vario <span class="ot">=</span> <span class="fu">variogram</span>( <span class="fu">log</span>(zinc) <span class="sc">~</span> <span class="fu">sqrt</span>(dist), <span class="at">data=</span>meuse )</span>
-<span id="cb25-3"><a href="geostatistics.html#cb25-3" aria-hidden="true" tabindex="-1"></a>vario_fit <span class="ot">=</span> <span class="fu">fit.variogram</span>( vario, <span class="at">model =</span> <span class="fu">vgm</span>(<span class="dv">1</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">900</span>, <span class="dv">1</span>))</span>
-<span id="cb25-4"><a href="geostatistics.html#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="geostatistics.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># show the fitted variogram and its parameters:</span></span>
-<span id="cb25-6"><a href="geostatistics.html#cb25-6" aria-hidden="true" tabindex="-1"></a>vario_fit</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="geostatistics.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a variogram of the meuse data</span></span>
+<span id="cb23-2"><a href="geostatistics.html#cb23-2" aria-hidden="true" tabindex="-1"></a>vario <span class="ot">=</span> <span class="fu">variogram</span>( <span class="fu">log</span>(zinc) <span class="sc">~</span> <span class="fu">sqrt</span>(dist), <span class="at">data=</span>meuse )</span>
+<span id="cb23-3"><a href="geostatistics.html#cb23-3" aria-hidden="true" tabindex="-1"></a>vario_fit <span class="ot">=</span> <span class="fu">fit.variogram</span>( vario, <span class="at">model =</span> <span class="fu">vgm</span>(<span class="dv">1</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">900</span>, <span class="dv">1</span>))</span>
+<span id="cb23-4"><a href="geostatistics.html#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="geostatistics.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># show the fitted variogram and its parameters:</span></span>
+<span id="cb23-6"><a href="geostatistics.html#cb23-6" aria-hidden="true" tabindex="-1"></a>vario_fit</span></code></pre></div>
 <pre><code>##   model      psill    range
 ## 1   Nug 0.05712112   0.0000
 ## 2   Exp 0.17641525 340.3105</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="geostatistics.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( vario, vario_fit )</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="geostatistics.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( vario, vario_fit )</span></code></pre></div>
 <p><img src="03_geostatistics_files/figure-html/meuse-variogram-1.png" width="672" /></p>
 <p>That’s our estimated covariance function. Now let’s make predictions at the locations specified in <code>meuse.grid</code> and plot them.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="geostatistics.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the prediction locations</span></span>
-<span id="cb28-2"><a href="geostatistics.html#cb28-2" aria-hidden="true" tabindex="-1"></a>meuse.grid <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.grid.csv&quot;</span>) )</span></code></pre></div>
-<pre><code>## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   x = col_double(),
-##   y = col_double(),
-##   part.a = col_double(),
-##   part.b = col_double(),
-##   dist = col_double(),
-##   soil = col_double(),
-##   ffreq = col_double()
-## )</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="geostatistics.html#cb30-1" aria-hidden="true" tabindex="-1"></a>meuse.grid <span class="ot">=</span> <span class="fu">st_as_sf</span>( meuse.grid, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&#39;x&#39;</span>, <span class="st">&#39;y&#39;</span>) )</span>
-<span id="cb30-2"><a href="geostatistics.html#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="geostatistics.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># regression kriging for the log zinc concentration:</span></span>
-<span id="cb30-4"><a href="geostatistics.html#cb30-4" aria-hidden="true" tabindex="-1"></a>meuse_fit <span class="ot">=</span> <span class="fu">krige</span>( <span class="fu">log</span>(zinc) <span class="sc">~</span> <span class="fu">sqrt</span>(dist), meuse, meuse.grid, <span class="at">model=</span>vario_fit)</span></code></pre></div>
-<pre><code>## [using universal kriging]</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="geostatistics.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( meuse_fit ) <span class="sc">+</span></span>
-<span id="cb32-2"><a href="geostatistics.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>( <span class="at">mapping =</span> <span class="fu">aes</span>( <span class="at">color=</span>var1.pred )) <span class="sc">+</span></span>
-<span id="cb32-3"><a href="geostatistics.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low=</span><span class="fu">grey</span>(<span class="fl">0.7</span>), <span class="at">high=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb32-4"><a href="geostatistics.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="geostatistics.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the prediction locations</span></span>
+<span id="cb26-2"><a href="geostatistics.html#cb26-2" aria-hidden="true" tabindex="-1"></a>meuse.grid <span class="ot">=</span> <span class="fu">read_csv</span>( <span class="fu">url</span>(<span class="st">&quot;https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.grid.csv&quot;</span>) )</span>
+<span id="cb26-3"><a href="geostatistics.html#cb26-3" aria-hidden="true" tabindex="-1"></a>meuse.grid <span class="ot">=</span> <span class="fu">st_as_sf</span>( meuse.grid, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&#39;x&#39;</span>, <span class="st">&#39;y&#39;</span>) )</span>
+<span id="cb26-4"><a href="geostatistics.html#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="geostatistics.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># regression kriging for the log zinc concentration:</span></span>
+<span id="cb26-6"><a href="geostatistics.html#cb26-6" aria-hidden="true" tabindex="-1"></a>meuse_fit <span class="ot">=</span> <span class="fu">krige</span>( <span class="fu">log</span>(zinc) <span class="sc">~</span> <span class="fu">sqrt</span>(dist), meuse, meuse.grid, <span class="at">model=</span>vario_fit)</span>
+<span id="cb26-7"><a href="geostatistics.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( meuse_fit ) <span class="sc">+</span></span>
+<span id="cb26-8"><a href="geostatistics.html#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>( <span class="at">mapping =</span> <span class="fu">aes</span>( <span class="at">color=</span>var1.pred )) <span class="sc">+</span></span>
+<span id="cb26-9"><a href="geostatistics.html#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low=</span><span class="fu">grey</span>(<span class="fl">0.7</span>), <span class="at">high=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-10"><a href="geostatistics.html#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="03_geostatistics_files/figure-html/meuse-kriging-1.png" width="672" /></p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="geostatistics.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the uncertainty of the kriging estimator</span></span>
-<span id="cb33-2"><a href="geostatistics.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( meuse_fit ) <span class="sc">+</span></span>
-<span id="cb33-3"><a href="geostatistics.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>( <span class="at">mapping =</span> <span class="fu">aes</span>( <span class="at">color=</span>var1.var )) <span class="sc">+</span></span>
-<span id="cb33-4"><a href="geostatistics.html#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low=</span><span class="fu">grey</span>(<span class="fl">0.7</span>), <span class="at">high=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb33-5"><a href="geostatistics.html#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="geostatistics.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the uncertainty of the kriging estimator</span></span>
+<span id="cb27-2"><a href="geostatistics.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( meuse_fit ) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="geostatistics.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>( <span class="at">mapping =</span> <span class="fu">aes</span>( <span class="at">color=</span>var1.var )) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="geostatistics.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low=</span><span class="fu">grey</span>(<span class="fl">0.7</span>), <span class="at">high=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb27-5"><a href="geostatistics.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="03_geostatistics_files/figure-html/meuse-kriging-2.png" width="672" /></p>
 <p>Note that the estimated concentration is greatest near the river, and the uncertainty of the predictions grows as you get farther away from measured data.</p>
 

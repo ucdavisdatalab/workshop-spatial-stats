@@ -62,7 +62,7 @@ abline(0, 1)
 ## Example: Meuse River zinc pollution
 OK, now another geostatistical data set. This time, the data are measurements of pollution in digs within a bend of the Meuse River in northern France. We will focus on zinc pollution. First thing is to load and transform the data:
 
-```{r load-meuse-data}
+```{r load-meuse-data, message=FALSE, results='hide'}
 # load the meuse data
 meuse = read_csv( url("https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.csv") )
 meuse = st_as_sf( meuse, coords=c( 'x', 'y') )
@@ -97,7 +97,7 @@ plot( vario, vario_fit )
 
 That's our estimated covariance function. Now let's make predictions at the locations specified in `meuse.grid` and plot them.
 
-```{r meuse-kriging}
+```{r meuse-kriging, message=FALSE, results='hide'}
 # load the prediction locations
 meuse.grid = read_csv( url("https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.grid.csv") )
 meuse.grid = st_as_sf( meuse.grid, coords = c('x', 'y') )

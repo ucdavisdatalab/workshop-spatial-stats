@@ -93,30 +93,6 @@ OK, now another geostatistical data set. This time, the data are measurements of
 ```r
 # load the meuse data
 meuse = read_csv( url("https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.csv") )
-```
-
-```
-## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   x = col_double(),
-##   y = col_double(),
-##   cadmium = col_double(),
-##   copper = col_double(),
-##   lead = col_double(),
-##   zinc = col_double(),
-##   elev = col_double(),
-##   dist = col_double(),
-##   om = col_double(),
-##   ffreq = col_double(),
-##   soil = col_double(),
-##   lime = col_double(),
-##   landuse = col_character(),
-##   dist.m = col_double()
-## )
-```
-
-```r
 meuse = st_as_sf( meuse, coords=c( 'x', 'y') )
 
 # look at the zinc concentration for a possible log transform
@@ -175,34 +151,10 @@ That's our estimated covariance function. Now let's make predictions at the loca
 ```r
 # load the prediction locations
 meuse.grid = read_csv( url("https://raw.githubusercontent.com/ucdavisdatalab/workshop-spatial-stats/master/data/meuse.grid.csv") )
-```
-
-```
-## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   x = col_double(),
-##   y = col_double(),
-##   part.a = col_double(),
-##   part.b = col_double(),
-##   dist = col_double(),
-##   soil = col_double(),
-##   ffreq = col_double()
-## )
-```
-
-```r
 meuse.grid = st_as_sf( meuse.grid, coords = c('x', 'y') )
 
 # regression kriging for the log zinc concentration:
 meuse_fit = krige( log(zinc) ~ sqrt(dist), meuse, meuse.grid, model=vario_fit)
-```
-
-```
-## [using universal kriging]
-```
-
-```r
 ggplot( meuse_fit ) +
   geom_sf( mapping = aes( color=var1.pred )) +
   scale_color_gradient(low=grey(0.7), high="red") +
